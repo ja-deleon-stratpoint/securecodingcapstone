@@ -6,6 +6,7 @@ const AllocationsHandler = require("./allocations");
 const MemosHandler = require("./memos");
 const ResearchHandler = require("./research");
 const RateLimit = require("express-rate-limit");
+const sanitize = require("sanitize");
 
 const limiter = RateLimit({
   windowMs: 60000,
