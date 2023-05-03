@@ -40,6 +40,13 @@ MongoClient.connect(db, (err, db) => {
         resave: true
 
     }));
+    
+    app.use(express.csrf());
+    
+    app.use(function(req, res, next) { 
+        res.locals.csrftoken = req.csrfToken(); 
+        next(); 
+    });
 
     // Register templating engine
     app.engine(".html", consolidate.swig);

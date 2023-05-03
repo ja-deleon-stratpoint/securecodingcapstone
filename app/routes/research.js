@@ -1,5 +1,7 @@
 const ResearchDAO = require("../data/research-dao").ResearchDAO;
 const needle = require("needle");
+const sanitize = require("sanitize");
+
 const {
     environmentalScripts
 } = require("../../config/config");
@@ -12,7 +14,8 @@ function ResearchHandler(db) {
     this.displayResearch = (req, res) => {
 
         if (req.query.symbol) {
-            const url = req.query.url + req.query.symbol;
+            const stockSymbol = sanitize.value(req.query.symbol, "string");
+            const url = 'https://finance.yahoo.com/quote/' + stockSymbol;
             return needle.get(url, (error, newResponse, body) => {
                 if (!error && newResponse.statusCode === 200) {
                     res.writeHead(200, {

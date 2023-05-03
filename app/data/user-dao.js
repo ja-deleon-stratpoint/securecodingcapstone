@@ -1,4 +1,5 @@
 const bcrypt = require("bcrypt-nodejs");
+const sanitize = require("sanitize");
 
 /* The UserDAO must be constructed with a connected database object */
 function UserDAO(db) {
@@ -88,8 +89,9 @@ function UserDAO(db) {
             }
         }
 
+        const parsedUserName = sanitize.value(userName, "string");
         usersCol.findOne({
-            userName: userName
+            userName: parsedUserName
         }, validateUserDoc);
     };
 
@@ -101,8 +103,9 @@ function UserDAO(db) {
     };
 
     this.getUserByUserName = (userName, callback) => {
+        const parsedUserName = sanitize.value(userName, "string");
         usersCol.findOne({
-            userName: userName
+            userName: parsedUserName
         }, callback);
     };
 
