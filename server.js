@@ -12,7 +12,6 @@ const marked = require("marked");
 const app = express(); // Web framework to handle routing requests
 const routes = require("./app/routes");
 const { port, db, cookieSecret } = require("./config/config"); // Application config properties
-const csrf = require('lusca').csrf;
 
 MongoClient.connect(db, (err, db) => {
     if (err) {
@@ -42,7 +41,12 @@ MongoClient.connect(db, (err, db) => {
 
     }));
     
-    app.use(csrf());
+    app.use(express.csrf());
+    
+    app.use(function(req, res, next) { 
+        res.locals.csrftoken = req.csrfToken(); 
+        next(); 
+    });
 
     // Register templating engine
     app.engine(".html", consolidate.swig);
