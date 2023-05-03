@@ -94,7 +94,17 @@ const index = (app, db) => {
         const {
             page
         } = req.params
-        return res.render(`tutorial/${page}`, {
+        
+        const parsedPage = sanitize.value(page, "string");
+        
+        const tutorialPages = [ "a1", "a2", "a3", "a4", "a5", "a6", "a7", "a8", "a9", "a10" ];
+        if (tutorialPages.includes(parsedPage)) {
+          return res.render(`tutorial/${parsedPage}`, {
+              environmentalScripts
+          });          
+        }
+      
+        return res.render("tutorial/a1", {
             environmentalScripts
         });
     });
