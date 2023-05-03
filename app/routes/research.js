@@ -16,8 +16,8 @@ function ResearchHandler(db) {
         const validStockSymbol = regexPattern.test(stockSymbol);
 
         if (validStockSymbol) {
-            const url = 'https://finance.yahoo.com/quote/' + stockSymbol;
-            return needle.get(url, (error, newResponse, body) => {
+            //const url = 'https://finance.yahoo.com/quote/' + stockSymbol;
+            return needle.get('https://finance.yahoo.com/quote/' + stockSymbol, (error, newResponse, body) => {
                 if (!error && newResponse.statusCode === 200) {
                     res.writeHead(200, {
                         "Content-Type": "text/html"
