@@ -5,6 +5,13 @@ const ContributionsHandler = require("./contributions");
 const AllocationsHandler = require("./allocations");
 const MemosHandler = require("./memos");
 const ResearchHandler = require("./research");
+const RateLimit = require('express-rate-limit');
+
+const limiter = RateLimit({
+  windowMs: 60000,
+  max: 3
+});
+
 const {
     environmentalScripts
 } = require("../../config/config");
@@ -30,6 +37,8 @@ const index = (app, db) => {
 
     // The main page of the app
     app.get("/", sessionHandler.displayWelcomePage);
+    
+    app.use(limiter);
 
     // Login form
     app.get("/login", sessionHandler.displayLoginPage);
