@@ -5,7 +5,7 @@ const ContributionsHandler = require("./contributions");
 const AllocationsHandler = require("./allocations");
 const MemosHandler = require("./memos");
 const ResearchHandler = require("./research");
-const RateLimit = require('express-rate-limit');
+const RateLimit = require("express-rate-limit");
 
 const limiter = RateLimit({
   windowMs: 60000,
