@@ -10,14 +10,10 @@ function ResearchHandler(db) {
     const researchDAO = new ResearchDAO(db);
 
     this.displayResearch = (req, res) => {
-        
-        const regexPattern = /[a-zA-Z0-9]+/;
-        const stockSymbol = req.query.symbol;
-        const validStockSymbol = regexPattern.test(stockSymbol);
 
-        if (validStockSymbol) {
-            //const url = 'https://finance.yahoo.com/quote/' + stockSymbol;
-            return needle.get('https://finance.yahoo.com/quote/' + stockSymbol, (error, newResponse, body) => {
+        if (req.query.symbol) {
+            const url = 'https://finance.yahoo.com/quote/' + req.query.symbol;
+            return needle.get(url, (error, newResponse, body) => {
                 if (!error && newResponse.statusCode === 200) {
                     res.writeHead(200, {
                         "Content-Type": "text/html"
